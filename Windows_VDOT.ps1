@@ -191,25 +191,6 @@ PROCESS {
         Write-EventLog -LogName 'Virtual Desktop Optimization' -Source 'VDOT' -EntryType Information -EventId 1 -Message "EULA Accepted by Parameter" 
     }
 
-    #region Disable, then remove, Windows Media Player including payload
-    If ($Optimizations -contains "WindowsMediaPlayer" -or $Optimizations -contains "All") {
-        try
-        {
-            Write-EventLog -EventId 10 -Message "[VDI Optimize] Disable / Remove Windows Media Player" -LogName 'Virtual Desktop Optimization' -Source 'WindowsMediaPlayer' -EntryType Information 
-            Write-Host "[VDI Optimize] Disable / Remove Windows Media Player" -ForegroundColor Cyan
-            Disable-WindowsOptionalFeature -Online -FeatureName WindowsMediaPlayer -NoRestart | Out-Null
-            Get-WindowsPackage -Online -PackageName "*Windows-mediaplayer*" | ForEach-Object { 
-                Write-EventLog -EventId 10 -Message "Removing $($_.PackageName)" -LogName 'Virtual Desktop Optimization' -Source 'WindowsMediaPlayer' -EntryType Information 
-                Remove-WindowsPackage -PackageName $_.PackageName -Online -ErrorAction SilentlyContinue -NoRestart | Out-Null
-            }
-        }
-        catch 
-        { 
-            Write-EventLog -EventId 110 -Message "Disabling / Removing Windows Media Player - $($_.Exception.Message)" -LogName 'Virtual Desktop Optimization' -Source 'WindowsMediaPlayer' -EntryType Error 
-        }
-    }
-    #endregion
-
     #region Begin Clean APPX Packages
     If ($Optimizations -contains "AppxPackages" -or $Optimizations -contains "All")
     {
