@@ -1,5 +1,12 @@
 [
     {
+        "RegItemPath": "HKLM:\\Software\\Policies\\Microsoft\\Dsh",
+        "RegItemValueName": "AllowNewsAndInterests",
+        "RegItemValueType": "DWord",
+        "RegItemValue": "0",
+        "VDIState": "Enabled"
+    },
+        {
         "RegItemPath": "HKLM:\\Software\\Policies\\Microsoft\\Windows\\Windows Feeds",
         "RegItemValueName": "EnableFeeds",
         "RegItemValueType": "DWord",
@@ -124,13 +131,6 @@
         "RegItemValueType": "DWord",
         "RegItemValue": "0",
         "VDIState": "Enabled"
-    },
-    {
-        "RegItemPath": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\NetworkConnectivityStatusIndicator",
-        "RegItemValueName": "DisablePassivePolling",
-        "RegItemValueType": "DWord",
-        "RegItemValue": "1",
-        "VDIState": "Unchanged"
     },
     {
         "RegItemPath": "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\NetCache",

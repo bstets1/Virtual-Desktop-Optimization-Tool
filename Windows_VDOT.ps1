@@ -584,21 +584,22 @@ PROCESS {
                 Write-Warning "No LGPO Settings found"
             }
         }
-        Else 
-        {
-            If (Test-Path (Join-Path $PSScriptRoot "LGPO\LGPO.exe"))
-            {
-                Write-EventLog -EventId 80 -Message "[VDI Optimize] Import Local Group Policy Items" -LogName 'Virtual Desktop Optimization' -Source 'LGPO' -EntryType Information
-                Write-Host "[VDI Optimize] Import Local Group Policy Items" -ForegroundColor Cyan
-                Write-Verbose "Importing Local Group Policy Items"
-                Start-Process (Join-Path $PSScriptRoot "LGPO\LGPO.exe") -ArgumentList "/g .\LGPO" -Wait
-            }
-            Else
-            {
-                Write-EventLog -EventId 80 -Message "File not found $PSScriptRoot\LGPO\LGPO.exe" -LogName 'Virtual Desktop Optimization' -Source 'LGPO' -EntryType Warning
-                Write-Warning "File not found $PSScriptRoot\LGPO\LGPO.exe"
-            }
-        }    
+        # Removing support for LGPO legacy tool
+        #Else 
+        #{
+        #    If (Test-Path (Join-Path $PSScriptRoot "LGPO\LGPO.exe"))
+        #    {
+        #        Write-EventLog -EventId 80 -Message "[VDI Optimize] Import Local Group Policy Items" -LogName 'Virtual Desktop Optimization' -Source 'LGPO' -EntryType Information
+        #        Write-Host "[VDI Optimize] Import Local Group Policy Items" -ForegroundColor Cyan
+        #        Write-Verbose "Importing Local Group Policy Items"
+        #        Start-Process (Join-Path $PSScriptRoot "LGPO\LGPO.exe") -ArgumentList "/g .\LGPO" -Wait
+        #    }
+        #    Else
+        #    {
+        #        Write-EventLog -EventId 80 -Message "File not found $PSScriptRoot\LGPO\LGPO.exe" -LogName 'Virtual Desktop Optimization' -Source 'LGPO' -EntryType Warning
+        #        Write-Warning "File not found $PSScriptRoot\LGPO\LGPO.exe"
+        #    }
+        #}    
     }
     #endregion
     
@@ -685,8 +686,7 @@ PROCESS {
             }
         }
         Write-EventLog -EventId 80 -Message "Removing shortcut links for OneDrive" -LogName 'Virtual Desktop Optimization' -Source 'AdvancedOptimizations' -EntryType Information
-        Remove-Item -Path 'C:\Windows\ServiceProfiles\LocalService\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk' -Force -ErrorAction SilentlyContinue
-        Remove-Item -Path 'C:\Windows\ServiceProfiles\NetworkService\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\OneDrive.lnk'  -Force -ErrorAction SilentlyContinue
+        Get-ChildItem C:\OneDrive*.* -ErrorAction SilentlyContinue -Recurse | Remove-Item -Force -ErrorAction SilentlyContinue
     }
 
     #endregion
